@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developers — CCP Vision AI</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Unified stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="min-h-screen flex flex-row">
+
+    <!-- SIDEBAR -->
+    <nav class="app-sidebar w-20 md:w-24 fixed h-full flex flex-col items-center py-8">
+
+        <div class="mb-12 brand-mark scan-ring">
+            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+        </div>
+
+        <div class="flex flex-col gap-8 flex-1 w-full">
+
+            <a href="/" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="eye" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Overview</span>
+            </a>
+
+            <a href="/user_guide" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">User Guide</span>
+            </a>
+
+            <a href="/developers" class="active relative w-full flex flex-col items-center p-2 group font-semibold">
+                <i data-lucide="user" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Developers</span>
+            </a>
+
+            <a href="/data_security" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Data Security</span>
+            </a>
+
+            <a href="/about_page" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="calendar" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">About</span>
+            </a>
+
+            <a href="/ai" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="bot" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">AI Page</span>
+            </a>
+
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 ml-20 md:ml-24 page-fade-in">
+
+        <!-- HEADER -->
+        <header class="app-header h-20 flex items-center justify-between px-8 md:px-12 sticky top-0 z-30">
+            <div>
+                <div class="brand-title">CCP Vision AI</div>
+                <div class="brand-subtitle">Deep Learning Eye Disease Detection System</div>
+            </div>
+            <div class="page-crumb hidden md:block">Developers</div>
+        </header>
+
+        <div class="p-12">
+
+            <div class="mb-10">
+                <h1 class="page-title">Developers</h1>
+                <p class="page-sub">
+                    Meet the CCP Vision AI development team — the innovators behind the system.
+                </p>
+            </div>
+
+            <div class="space-y-8">
+
+                <div class="card">
+                    <div class="flex gap-4 items-start">
+                        <div class="icon-spot"><i data-lucide="code" class="w-6 h-6"></i></div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Lead Developer</h3>
+                            <p>Builds the system core, handles AI integration, and oversees full-stack development.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex gap-4 items-start">
+                        <div class="icon-spot"><i data-lucide="palette" class="w-6 h-6"></i></div>
+                        <div>
+                            <h3 class="text-xl font-semibold">UI/UX Designer</h3>
+                            <p>Designs clean, user-friendly interfaces and ensures a smooth visual experience.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex gap-4 items-start">
+                        <div class="icon-spot"><i data-lucide="server" class="w-6 h-6"></i></div>
+                        <div>
+                            <h3 class="text-xl font-semibold">System Engineer</h3>
+                            <p>Maintains project structure, optimizes performance, and handles routing logic.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex gap-4 items-start">
+                        <div class="icon-spot"><i data-lucide="cpu" class="w-6 h-6"></i></div>
+                        <div>
+                            <h3 class="text-xl font-semibold">AI Model Specialist</h3>
+                            <p>Trains and fine-tunes CNN, YOLO, and TensorFlow models for accurate detection.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CCP Vision AI — AI Detection</title>
+
+  <!-- Tailwind (utility-first) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Unified stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="antialiased">
+
+<div class="min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <nav class="app-sidebar w-20 md:w-24 fixed h-full left-0 top-0 flex flex-col items-center py-8 z-50">
+
+    <div class="mb-12 brand-mark scan-ring">
+      <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+    </div>
+
+    <div class="flex flex-col gap-8 flex-1 w-full">
+
+      <a href="/" class="relative w-full flex flex-col items-center justify-center gap-2 p-2 group">
+        <i data-lucide="eye" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Overview</span>
+      </a>
+
+      <a href="/user_guide" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="activity" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">User Guide</span>
+      </a>
+
+      <a href="/developers" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="user" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Developers</span>
+      </a>
+
+      <a href="/data_security" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="shield" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Data Security</span>
+      </a>
+
+      <a href="/about_page" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="calendar" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">About</span>
+      </a>
+
+      <a href="/ai" class="active relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="bot" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">AI Page</span>
+      </a>
+
+    </div>
+  </nav>
+
+
+  <!-- MAIN -->
+  <main class="flex-1 ml-20 md:ml-24 page-fade-in">
+
+    <header class="app-header h-20 flex items-center justify-between px-6 md:px-12 sticky top-0 z-30">
+      <div>
+        <div class="brand-title">CCP Vision AI</div>
+        <div class="brand-subtitle">Deep Learning Eye Disease Detection System</div>
+      </div>
+      <div class="page-crumb hidden md:block">AI Page</div>
+    </header>
+
+    <!-- Title area -->
+    <section class="px-6 md:px-12 pt-8 pb-6">
+      <h1 class="page-title">AI Eye Disease Detection</h1>
+      <p class="page-sub mt-2">Use a live camera stream or upload a clear eye image. Results are private and processed securely — designed for quick screening and triage.</p>
+    </section>
+
+    <!-- Grid: Camera and Upload -->
+    <section class="px-6 md:px-12 pb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- CAMERA CARD -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-3">
+              <div class="icon-spot"><i data-lucide="camera"></i></div>
+              <div>
+                <h2 class="text-lg font-semibold">Live Camera</h2>
+                <div class="text-sm muted">Real-time • Secure</div>
+              </div>
+            </div>
+            <div class="text-sm muted">Tip: good lighting improves detection</div>
+          </div>
+
+          <div class="mt-4 flex gap-3">
+            <button id="frontCamBtn" class="px-3 py-2 rounded-xl btn-ghost">Front Camera</button>
+            <button id="backCamBtn" class="px-3 py-2 rounded-xl btn-ghost">Back Camera</button>
+          </div>
+
+          <div class="mt-4 rounded-lg overflow-hidden border border-slate-200">
+            <video id="video" autoplay playsinline class="w-full h-64 md:h-72 bg-black object-cover"></video>
+          </div>
+
+          <!-- Preview image when captured -->
+          <div id="previewWrap" class="mt-4 hidden">
+            <div class="text-sm muted mb-2">Preview</div>
+            <img id="previewImg" class="w-full rounded-lg border" alt="Captured preview" />
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-3 items-center">
+            <button id="startBtn" class="px-4 py-2 rounded-xl btn-primary">Start</button>
+            <button id="stopBtn" class="px-4 py-2 rounded-xl btn-danger disabled:opacity-60" disabled>Stop</button>
+            <button id="captureBtn" class="px-4 py-2 rounded-xl btn-ghost">Capture & Analyze</button>
+            <button id="retakeBtn" class="px-4 py-2 rounded-xl btn-ghost hidden">Retake</button>
+            <div class="ml-auto hidden md:block text-sm muted">Export: PDF after analysis</div>
+          </div>
+
+          <div class="mt-4 space-y-3">
+            <div id="cameraLoading" class="hidden flex items-center gap-3">
+              <div class="w-full">
+                <div class="progress-track"><div id="cameraProgress" class="progress-fill"></div></div>
+              </div>
+              <span class="text-xs muted">Analyzing...</span>
+            </div>
+
+            <div id="result" class="hidden result-box rounded-lg"></div>
+
+            <div class="flex gap-3">
+              <button id="cameraPdfBtn" class="hidden px-4 py-2 rounded-xl btn-primary">Download PDF</button>
+            </div>
+          </div>
+
+          <canvas id="canvas" class="hidden"></canvas>
+        </div>
+
+        <!-- UPLOAD CARD -->
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-3">
+              <div class="icon-spot"><i data-lucide="upload"></i></div>
+              <div>
+                <h2 class="text-lg font-semibold">Upload Image</h2>
+                <div class="text-sm muted">JPG/PNG • Max 10 MB</div>
+              </div>
+            </div>
+            <div class="text-sm muted">Tip: center the cornea and use plain background</div>
+          </div>
+
+          <label class="mt-4 block">
+            <input id="fileInput" type="file" accept="image/*" class="sr-only" />
+            <div id="filePicker" tabindex="0" class="mt-2 p-4 border border-dashed border-slate-200 rounded-lg flex items-center justify-between bg-white cursor-pointer">
+              <div class="text-sm muted">Choose an image file</div>
+              <div class="text-sm text-slate-600">Select</div>
+            </div>
+          </label>
+
+          <div id="uploadPreviewWrap" class="mt-4 hidden">
+            <div class="text-sm muted mb-2">Preview</div>
+            <img id="uploadPreview" class="w-full rounded-lg border" alt="Upload preview" />
+          </div>
+
+          <div class="mt-4 flex gap-3 items-center">
+            <button id="uploadBtn" class="px-4 py-2 rounded-xl btn-primary">Upload & Analyze</button>
+            <button id="clearUploadBtn" class="px-4 py-2 rounded-xl btn-ghost hidden">Clear</button>
+            <div id="uploadStatus" class="ml-auto text-sm muted hidden">Ready</div>
+          </div>
+
+          <div id="uploadLoading" class="hidden mt-4 flex items-center gap-3">
+            <div class="w-full">
+              <div class="progress-track"><div id="uploadProgress" class="progress-fill"></div></div>
+            </div>
+            <span class="text-xs muted">Analyzing...</span>
+          </div>
+
+          <div id="uploadResult" class="hidden result-box rounded-lg mt-4"></div>
+
+          <div class="mt-3">
+            <button id="uploadPdfBtn" class="hidden px-4 py-2 rounded-xl btn-primary">Download PDF</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer note -->
+    <section class="px-6 md:px-12 pb-16">
+      <div class="text-sm muted">Results are intended for screening only and not a medical diagnosis. Please consult a healthcare professional for a full clinical evaluation.</div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  lucide.createIcons(); // render icons
+
+  // === Element refs ===
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const captureBtn = document.getElementById('captureBtn');
+  const retakeBtn = document.getElementById('retakeBtn');
+
+  const frontCamBtn = document.getElementById('frontCamBtn');
+  const backCamBtn = document.getElementById('backCamBtn');
+
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+
+  const cameraLoading = document.getElementById('cameraLoading');
+  const cameraProgress = document.getElementById('cameraProgress');
+  const cameraPdfBtn = document.getElementById('cameraPdfBtn');
+  const resultBox = document.getElementById('result');
+  const previewWrap = document.getElementById('previewWrap');
+  const previewImg = document.getElementById('previewImg');
+
+  const fileInput = document.getElementById('fileInput');
+  const filePicker = document.getElementById('filePicker');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const clearUploadBtn = document.getElementById('clearUploadBtn');
+  const uploadLoading = document.getElementById('uploadLoading');
+  const uploadProgress = document.getElementById('uploadProgress');
+  const uploadResult = document.getElementById('uploadResult');
+  const uploadPreviewWrap = document.getElementById('uploadPreviewWrap');
+  const uploadPreview = document.getElementById('uploadPreview');
+  const uploadPdfBtn = document.getElementById('uploadPdfBtn');
+  const uploadStatus = document.getElementById('uploadStatus');
+
+  // === state ===
+  let stream = null;
+  let preferredFacing = 'environment';
+  let lastPredictionText = '';
+  let lastUploadPredictionText = '';
+
+  // =============================
+  // CAMERA BUSY INDICATORS
+  // =============================
+  function setCameraBusy(busy){
+    captureBtn.disabled = busy;
+    startBtn.disabled = busy;
+    if(busy){
+      cameraLoading.classList.remove('hidden');
+      cameraProgress.style.width = '0%';
+      setTimeout(()=> cameraProgress.style.width = '35%', 80);
+      setTimeout(()=> cameraProgress.style.width = '80%', 400);
+    } else {
+      cameraLoading.classList.add('hidden');
+      cameraProgress.style.width = '0%';
+    }
+  }
+
+  function setUploadBusy(busy){
+    uploadBtn.disabled = busy;
+    if(busy){
+      uploadLoading.classList.remove('hidden');
+      uploadProgress.style.width = '0%';
+      setTimeout(()=> uploadProgress.style.width = '50%', 60);
+    } else {
+      uploadLoading.classList.add('hidden');
+      uploadProgress.style.width = '0%';
+    }
+  }
+
+  // =============================
+  // START CAMERA
+  // =============================
+  async function startCamera(deviceId = null, facing = null){
+    try{
+      if(stream){
+        stream.getTracks().forEach(t=>t.stop());
+        video.srcObject = null;
+      }
+      let constraints = { video: true };
+      if(deviceId) constraints = { video: { deviceId: { exact: deviceId } } };
+      else if(facing) constraints = { video: { facingMode: facing } };
+
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = stream;
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+    }catch(err){
+      alert('Unable to access camera. Check permissions.');
+      console.error(err);
+    }
+  }
+
+  // =============================
+  // CAMERA BUTTONS
+  // =============================
+  startBtn.addEventListener('click', () => {
+    startCamera(null, preferredFacing);
+  });
+
+  stopBtn.addEventListener('click', () => {
+    if(stream){
+      stream.getTracks().forEach(t => t.stop());
+      video.srcObject = null;
+      stream = null;
+    }
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+
+  frontCamBtn.addEventListener('click', () => {
+    preferredFacing = 'user';
+    startCamera(null, preferredFacing);
+  });
+
+  backCamBtn.addEventListener('click', () => {
+    preferredFacing = 'environment';
+    startCamera(null, preferredFacing);
+  });
+
+  // =============================
+  // CAMERA CAPTURE
+  // =============================
+  captureBtn.addEventListener('click', ()=> {
+    if(!stream) return alert('Start the camera first.');
+
+    if(video.readyState < 2) return alert('Camera not ready yet.');
+
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+
+    canvas.toBlob(async (blob)=>{
+      if(!blob) return alert('Capture failed.');
+
+      previewImg.src = URL.createObjectURL(blob);
+      previewWrap.classList.remove('hidden');
+      retakeBtn.classList.remove('hidden');
+      captureBtn.disabled = true;
+      setCameraBusy(true);
+
+      try{
+        const form = new FormData();
+        form.append('image', blob, 'capture.jpg');
+
+        const res = await fetch('/predict', {
+          method: 'POST',
+          body: form
+        });
+
+        if(!res.ok) throw new Error('Prediction failed');
+        const data = await res.json();
+
+        lastPredictionText = data.prediction || 'No disease detected';
+        displayResult(resultBox, lastPredictionText);
+        cameraPdfBtn.classList.remove('hidden');
+
+      }catch(err){
+        alert('Failed to analyze image.');
+        console.error(err);
+      } finally {
+        setCameraBusy(false);
+        captureBtn.disabled = false;
+      }
+    }, 'image/jpeg', 0.92);
+  });
+
+  // =============================
+  // IMAGE UPLOAD
+  // =============================
+  filePicker.addEventListener('click', ()=> {
+    fileInput.value = '';
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (e)=> {
+    const file = e.target.files[0];
+    if(!file) return;
+
+    uploadPreview.src = URL.createObjectURL(file);
+    uploadPreviewWrap.classList.remove('hidden');
+
+    clearUploadBtn.classList.remove('hidden');
+    uploadStatus.classList.remove('hidden');
+    uploadStatus.textContent = file.name;
+
+    uploadResult.classList.add('hidden');
+    uploadPdfBtn.classList.add('hidden');
+  });
+
+  clearUploadBtn.addEventListener('click', ()=> {
+    fileInput.value = '';
+    uploadPreview.src = '';
+    uploadPreviewWrap.classList.add('hidden');
+    uploadResult.classList.add('hidden');
+    uploadPdfBtn.classList.add('hidden');
+    clearUploadBtn.classList.add('hidden');
+    uploadStatus.classList.add('hidden');
+  });
+
+  uploadBtn.addEventListener('click', async ()=> {
+    const file = fileInput.files[0];
+    if(!file) return alert('Choose an image first.');
+    setUploadBusy(true);
+
+    try{
+      const form = new FormData();
+      form.append('image', file);
+
+      const res = await fetch('/predict', {
+        method: 'POST',
+        body: form
+      });
+
+      if(!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+
+      lastUploadPredictionText = data.prediction || 'No disease detected';
+      displayResult(uploadResult, lastUploadPredictionText);
+      uploadPdfBtn.classList.remove('hidden');
+
+    }catch(err){
+      alert('Upload failed.');
+      console.error(err);
+    } finally {
+      setUploadBusy(false);
+    }
+  });
+
+  // =============================
+  // DISPLAY RESULT
+  // =============================
+  function displayResult(box, text){
+    box.classList.remove('hidden');
+    const isNormal = /no disease|normal|clear/i.test(text);
+    box.innerHTML = `<strong class="block">Diagnosis:</strong><div class="mt-1">${escapeHtml(text)}</div>`;
+    box.classList.remove('result-ok','result-bad');
+    box.classList.add(isNormal ? 'result-ok' : 'result-bad');
+  }
+
+  function escapeHtml(unsafe) {
+    return String(unsafe).replace(/[&<>"'`=\/]/g, s =>
+      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;","/":"&#x2F;","=":"&#x3D;","`":"&#x60;"})[s]
+    );
+  }
+
+  window.addEventListener('beforeunload', ()=>{
+    if(stream) stream.getTracks().forEach(t => t.stop());
+  });
+</script>
+
+</body>
+</html>

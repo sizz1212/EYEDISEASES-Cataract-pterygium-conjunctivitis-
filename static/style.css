@@ -1,0 +1,1017 @@
+/* ============================================================
+   CCP Vision AI — Deep Learning Eye Disease Detection System
+   Unified Design System (single source of truth for all pages)
+
+   Palette story: off-white keeps the interface calm and clinical
+   without going sterile-white; sage green is the primary brand
+   accent — steady, medical, easy on the eyes for a product about
+   eye health; black is the one high-contrast accent, reserved for
+   moments that need real attention (active nav, key CTAs, the
+   scan motif) so it never competes with the sage for attention.
+
+   NOTE: variable names below (--forest-*, --terracotta-*, --cream-*)
+   are kept from the previous palette revision so every rule in this
+   file keeps working unchanged — only the hex values moved. Read
+   --forest-* as "sage", --terracotta-* as "black/ink accent", and
+   --cream-* as "off-white" going forward.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root{
+  /* Brand — sage green is the primary accent, black is the
+     high-contrast secondary accent used sparingly */
+  --forest-900:#232E20;
+  --forest-800:#37452F;
+  --forest-700:#5C7A5E;
+  --forest-600:#7E9C82;
+  --forest-100:#E3E9DE;
+  --forest-50:#F1F4EE;
+
+  --terracotta-800:#0E0F0B;
+  --terracotta-700:#181A14;
+  --terracotta-600:#33352C;
+  --terracotta-100:#E6E4D9;
+  --terracotta-50:#F4F3ED;
+
+  --cream-050:#FFFFFF;
+  --cream-100:#F6F6F3;
+
+  --ink:#15160F;
+  --body-text:#33352C;
+  --muted:#767A6C;
+
+  --bg:var(--cream-050);
+  --surface:#FFFFFF;
+  --border:#E7E7E1;
+
+  --danger:#A6402C;
+  --warning:#9C7420;
+  --info:#3F6558;
+  --success:#4C6E4F;
+
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-sm:8px;
+
+  --shadow-sm: 0 4px 14px rgba(27,38,33,0.06);
+  --shadow-md: 0 10px 28px rgba(27,38,33,0.09);
+  --shadow-lg: 0 18px 40px rgba(27,38,33,0.14);
+
+  --font-display:'Outfit', system-ui, sans-serif;
+  --font-body:'Inter', system-ui, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+html{ font-family: var(--font-body); }
+
+body{
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--body-text);
+  margin:0;
+  font-size:15.5px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+button, input, textarea, select{
+  font-family: var(--font-body);
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing:-0.01em;
+  line-height:1.2;
+}
+
+a{ color:inherit; }
+
+/* ============================================================
+   Signature motif — "retina scan" ring.
+   A quiet pulsing ring used behind the brand mark and on
+   loading/active states — a nod to a live optical scan
+   without being literal about it. Terracotta reads as the
+   "active signal" against the forest brand mark.
+   ============================================================ */
+.scan-ring{ position:relative; }
+.scan-ring::before{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  border:1.5px solid var(--terracotta-600);
+  opacity:.4;
+  animation: scanPulse 2.6s ease-in-out infinite;
+}
+@keyframes scanPulse{
+  0%{ transform:scale(0.9); opacity:.55; }
+  70%{ transform:scale(1.35); opacity:0; }
+  100%{ transform:scale(1.35); opacity:0; }
+}
+@media (prefers-reduced-motion: reduce){
+  .scan-ring::before{ animation:none; }
+}
+
+/* ============================================================
+   Sidebar navigation — shared across every app page
+   Redesigned as a quiet forest panel with a warm cream inlay,
+   a textured brand header, and a terracotta active indicator
+   so the current page reads unmistakably at a glance.
+   ============================================================ */
+nav.app-sidebar{
+  position:fixed !important;
+  top:0; left:0;
+  height:100vh;
+  z-index:50;
+  overflow-y:auto;
+  scrollbar-width:none;
+  background:
+    linear-gradient(180deg, rgba(44,107,73,0.05), rgba(44,107,73,0) 220px),
+    var(--surface) !important;
+  border-right:1px solid var(--border) !important;
+  box-shadow: 1px 0 0 rgba(27,38,33,0.02), var(--shadow-sm);
+}
+nav.app-sidebar::-webkit-scrollbar{ display:none; }
+
+/* faint diagonal leaf-vein texture along the top of the panel */
+nav.app-sidebar::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:180px;
+  pointer-events:none;
+  opacity:.5;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(44,107,73,0.10) 0, transparent 42%),
+    radial-gradient(circle at 82% 8%, rgba(201,106,63,0.10) 0, transparent 38%);
+}
+
+nav.app-sidebar .brand-mark{
+  color:var(--forest-700);
+  position:relative;
+}
+
+/* brand header strip — a defined "home base" above the links */
+nav.app-sidebar .brand-mark{
+  padding-bottom:14px;
+  margin-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+
+nav.app-sidebar a{ color:#1B2621; text-decoration:none; }
+nav.app-sidebar a{
+  position:relative;
+  border-radius:14px;
+  transition: background-color .28s ease, transform .22s ease, box-shadow .28s ease;
+}
+nav.app-sidebar a:hover{
+  background: var(--forest-50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(44,107,73,0.10);
+}
+nav.app-sidebar a.active{
+  background: linear-gradient(90deg, var(--forest-50), var(--cream-100) 130%);
+  box-shadow: inset 0 0 0 1px rgba(44,107,73,0.10);
+}
+nav.app-sidebar a i, nav.app-sidebar a svg{
+  color:#3E463F !important;
+  transition: color .22s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+nav.app-sidebar a:hover i, nav.app-sidebar a:hover svg{
+  color:var(--terracotta-600) !important;
+  transform: scale(1.16) translateY(-1px);
+}
+nav.app-sidebar a.active i, nav.app-sidebar a.active svg{ color:var(--forest-700) !important; transform:scale(1.06); }
+
+/* active indicator — terracotta bar with a soft glow, distinct
+   from the forest icon so the "you are here" cue reads as a
+   deliberate accent rather than a repeated brand color */
+nav.app-sidebar a.active::before{
+  content:"";
+  position:absolute;
+  left:-1px;
+  top:50%;
+  transform:translateY(-50%) scaleY(0);
+  transform-origin:center;
+  width:3px;
+  height:22px;
+  background:var(--terracotta-600);
+  border-radius:0 4px 4px 0;
+  box-shadow: 0 0 10px rgba(201,106,63,0.55);
+  animation: growBar .3s ease forwards;
+}
+@keyframes growBar{
+  from{ transform:translateY(-50%) scaleY(0); }
+  to{ transform:translateY(-50%) scaleY(1); }
+}
+
+/* small forest dot before each nav label on hover — a quiet
+   secondary cue that reinforces direction without noise */
+nav.app-sidebar a::after{
+  content:"";
+  position:absolute;
+  right:12px;
+  top:50%;
+  width:5px; height:5px;
+  border-radius:50%;
+  background:var(--forest-600);
+  opacity:0;
+  transform:translateY(-50%) scale(.4);
+  transition:opacity .2s ease, transform .2s ease;
+}
+nav.app-sidebar a:hover::after{ opacity:.55; transform:translateY(-50%) scale(1); }
+nav.app-sidebar a.active::after{ opacity:0; }
+
+.sidebar-tooltip{
+  opacity:0;
+  position:absolute;
+  left:100%;
+  margin-left:8px;
+  top:50%;
+  transform:translate(-4px,-50%) scale(.94);
+  transform-origin:left center;
+  white-space:nowrap;
+  background:var(--forest-900);
+  color:#fff;
+  padding:4px 9px;
+  border-radius:6px;
+  font-size:11px;
+  font-family: var(--font-body);
+  transition:opacity .18s ease, transform .18s ease;
+  pointer-events:none;
+  z-index:60;
+}
+.group:hover .sidebar-tooltip{
+  opacity:1;
+  transform:translate(0,-50%) scale(1);
+}
+
+/* ============================================================
+   App header bar — top strip on every inner page
+   ============================================================ */
+.app-header, .site-header{
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(27,38,33,0.07);
+}
+.app-header .brand-title, .site-header .brand-title{
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size:1.05rem;
+  color:var(--ink);
+  line-height:1;
+}
+.app-header .brand-subtitle, .site-header .brand-subtitle{
+  font-size:.62rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.app-header .page-crumb{
+  font-size:.72rem;
+  color:var(--forest-700);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.brand-avatar{
+  height:2.5rem; width:2.5rem;
+  border-radius:9999px;
+  background:linear-gradient(135deg,var(--forest-600),var(--forest-900));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:700;
+  font-family: var(--font-display);
+}
+
+/* ============================================================
+   Page title block
+   ============================================================ */
+.page-title{ font-size:1.9rem; font-weight:700; line-height:1.1; font-family:var(--font-display); color:var(--ink); }
+.page-sub{ color:var(--muted); margin-top:.4rem; max-width:60ch; }
+
+/* ============================================================
+   Cards — .card / .info-card / .glass-card are treated as one
+   component so every page (old class names kept) looks the same
+   ============================================================ */
+.card, .info-card, .glass-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:28px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+.card:hover, .info-card:hover, .glass-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+}
+
+.icon-spot{
+  width:44px; height:44px;
+  display:inline-grid; place-items:center;
+  border-radius:12px;
+  background:var(--forest-50);
+  color:var(--forest-700);
+}
+
+.muted{ color:var(--muted); }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-primary{
+  background:linear-gradient(90deg,var(--forest-600),var(--forest-700));
+  color:#fff;
+  font-weight:600;
+  border-radius:12px;
+  border:none;
+  box-shadow:0 6px 18px rgba(44,107,73,0.24);
+  transition:filter .15s ease, transform .1s ease;
+}
+.btn-primary:hover{ filter:brightness(1.06); }
+.btn-primary:active{ transform:translateY(1px); }
+
+.btn-ghost{
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--ink);
+  border-radius:12px;
+}
+.btn-ghost:hover{ border-color:var(--forest-600); color:var(--forest-700); }
+
+.btn-danger{
+  background:linear-gradient(90deg,#d16a4e,#c0392b);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+}
+
+/* accent CTA for high-priority actions (e.g. "Start scan") —
+   the one place terracotta is allowed to be a full fill */
+.btn-accent{
+  background:linear-gradient(90deg,var(--terracotta-600),var(--terracotta-700));
+  color:#fff;
+  font-weight:600;
+  border-radius:12px;
+  border:none;
+  box-shadow:0 6px 18px rgba(176,78,44,0.24);
+  transition:filter .15s ease, transform .1s ease;
+}
+.btn-accent:hover{ filter:brightness(1.06); }
+.btn-accent:active{ transform:translateY(1px); }
+
+button:disabled{ opacity:.6; cursor:not-allowed; transform:none !important; }
+
+/* ============================================================
+   Progress + result states (AI / camera pages)
+   ============================================================ */
+.progress-track{ height:8px; background:rgba(27,38,33,.07); border-radius:999px; overflow:hidden; }
+.progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--forest-600),var(--terracotta-600)); border-radius:999px; transition:width .35s ease; }
+
+.result-box{ padding:.85rem 1rem; border-radius:12px; font-size:.95rem; }
+.result-ok{ background:#EEF6EE; color:#1E4030; border:1px solid #C7DFC9; }
+.result-bad{ background:#FBEEE9; color:#7A2E17; border:1px solid #EAC2AE; }
+
+/* file picker (AI page) */
+#filePicker{ transition: box-shadow .12s ease, transform .06s ease; }
+#filePicker:hover{ box-shadow: 0 6px 18px rgba(44,107,73,0.10); transform: translateY(-2px); }
+input[type="file"] + div:focus-within{ box-shadow: 0 8px 20px rgba(44,107,73,0.12); outline:none; }
+
+/* ============================================================
+   Hero (index.html)
+   ============================================================ */
+.hero-eyebrow{
+  display:inline-block;
+  padding:.3rem .8rem;
+  border-radius:999px;
+  background:var(--terracotta-50);
+  color:var(--terracotta-700);
+  font-size:.68rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  border:1px solid var(--terracotta-100);
+}
+.btn-pulse{ position:relative; overflow:hidden; }
+.btn-pulse::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:inherit;
+  box-shadow:0 0 0 0 rgba(44,107,73,.45);
+  animation:pulseRing 2.4s ease-out infinite;
+}
+@keyframes pulseRing{
+  0%{ box-shadow:0 0 0 0 rgba(44,107,73,.45); }
+  70%{ box-shadow:0 0 0 14px rgba(44,107,73,0); }
+  100%{ box-shadow:0 0 0 0 rgba(44,107,73,0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .btn-pulse::after{ animation:none; }
+}
+
+/* ============================================================
+   Privacy — modal (index) + standalone consent gate page
+   ============================================================ */
+.privacy-scrim{ background:rgba(19,44,32,.74); backdrop-filter:blur(4px); }
+
+.privacy-page-bg{
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  background:
+    radial-gradient(60% 60% at 15% 10%, rgba(44,107,73,.38), transparent 60%),
+    radial-gradient(50% 50% at 90% 90%, rgba(176,78,44,.22), transparent 60%),
+    linear-gradient(135deg,#122A1E,#0F1912);
+}
+.privacy-card{
+  background:var(--surface);
+  width:100%; max-width:640px;
+  padding:44px;
+  border-radius:22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+  animation:fadeUp .6s ease-in-out;
+}
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+
+.privacy-highlight{
+  background:var(--forest-50);
+  border-left:5px solid var(--forest-600);
+  border-radius:12px;
+  padding:16px 18px;
+  margin-bottom:22px;
+}
+
+.btn{
+  width:100%;
+  padding:14px;
+  font-size:1rem;
+  font-weight:600;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  margin-top:10px;
+  transition:.2s;
+  font-family:var(--font-body);
+}
+.btn-accept{ background:linear-gradient(90deg,var(--forest-600),var(--forest-700)); color:#fff; }
+.btn-accept:hover{ filter:brightness(1.06); }
+.btn-decline{ background:#fff; color:var(--danger); border:1.5px solid #EAC2AE; }
+.btn-decline:hover{ background:#FBEEE9; }
+.footer-note{ margin-top:25px; text-align:center; font-size:13px; color:var(--muted); }
+
+/* ============================================================
+   Camera / real-time detection page
+   ============================================================ */
+.camera-page-bg{
+  min-height:100vh;
+  background: radial-gradient(80% 60% at 50% -10%, rgba(44,107,73,.16), transparent 60%), var(--bg);
+  text-align:center;
+}
+.camera-frame{
+  width:95%;
+  max-width:650px;
+  border-radius:18px;
+  margin-top:28px;
+  border:3px solid var(--forest-600);
+  box-shadow:var(--shadow-md);
+}
+.camera-back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  margin-top:26px;
+  padding:12px 26px;
+  background:linear-gradient(90deg,var(--forest-600),var(--forest-700));
+  color:#fff !important;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+  box-shadow:0 8px 20px rgba(44,107,73,.26);
+}
+.camera-back-link:hover{ filter:brightness(1.06); }
+
+/* ============================================================
+   Utility / responsive
+   ============================================================ */
+@media (max-width:900px){
+  .page-title{ font-size:1.5rem; }
+  main{ padding-left:.9rem; padding-right:.9rem; }
+}
+
+/* ============================================================
+   Global polish — scroll, selection, focus
+   ============================================================ */
+html{ scroll-behavior:smooth; }
+::selection{ background:var(--terracotta-100); color:var(--terracotta-800); }
+:focus-visible{ outline:2px solid var(--forest-600); outline-offset:2px; border-radius:6px; }
+
+/* ============================================================
+   Page entrance — applied to the main content wrapper per page
+   ============================================================ */
+@keyframes pageFadeIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.page-fade-in{ animation: pageFadeIn .55s cubic-bezier(.22,.61,.36,1) both; }
+@media (prefers-reduced-motion: reduce){
+  .page-fade-in{ animation:none; }
+}
+
+/* ============================================================
+   Card entrance + hover polish — accent bar wipe, icon spring,
+   staggered fade-up so repeated cards feel choreographed
+   ============================================================ */
+@keyframes cardFadeUp{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.card, .info-card, .glass-card{
+  position:relative;
+  overflow:hidden;
+  animation: cardFadeUp .5s cubic-bezier(.22,.61,.36,1) both;
+}
+.card::after, .info-card::after, .glass-card::after{
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  height:3px; width:0%;
+  background:linear-gradient(90deg,var(--forest-600),var(--forest-700),var(--terracotta-600));
+  transition:width .4s ease;
+}
+.card:hover::after, .info-card:hover::after, .glass-card:hover::after{ width:100%; }
+
+.card:nth-of-type(1), .info-card:nth-of-type(1), .glass-card:nth-of-type(1){ animation-delay:.04s; }
+.card:nth-of-type(2), .info-card:nth-of-type(2), .glass-card:nth-of-type(2){ animation-delay:.1s; }
+.card:nth-of-type(3), .info-card:nth-of-type(3), .glass-card:nth-of-type(3){ animation-delay:.16s; }
+.card:nth-of-type(4), .info-card:nth-of-type(4), .glass-card:nth-of-type(4){ animation-delay:.22s; }
+.card:nth-of-type(5), .info-card:nth-of-type(5), .glass-card:nth-of-type(5){ animation-delay:.28s; }
+
+@media (prefers-reduced-motion: reduce){
+  .card, .info-card, .glass-card{ animation:none; }
+}
+
+/* icon-spot spring on card hover */
+.icon-spot{
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .25s ease, color .25s ease;
+}
+.card:hover .icon-spot, .info-card:hover .icon-spot, .glass-card:hover .icon-spot{
+  transform: rotate(-8deg) scale(1.1);
+  background:var(--forest-600);
+  color:#fff;
+}
+
+/* ============================================================
+   Buttons — shine sweep + press feedback
+   ============================================================ */
+.btn-primary, .btn-accept, .btn-pulse, .btn-accent{
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary::before, .btn-accept::before, .btn-accent::before{
+  content:"";
+  position:absolute;
+  top:0; left:-75%;
+  width:50%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.4), transparent);
+  transform:skewX(-20deg);
+  transition:left .55s ease;
+  pointer-events:none;
+}
+.btn-primary:hover::before, .btn-accept:hover::before, .btn-accent:hover::before{ left:125%; }
+
+.btn-ghost, .btn-danger{ transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease; }
+.btn-ghost:active, .btn-danger:active, .btn-primary:active, .btn-accept:active, .btn-accent:active{ transform:translateY(1px) scale(.99); }
+
+/* ============================================================
+   Progress fill — subtle animated shimmer while analyzing
+   ============================================================ */
+.progress-fill{
+  background: linear-gradient(90deg,var(--forest-600),var(--terracotta-600),var(--forest-600));
+  background-size:200% 100%;
+  animation: shimmerMove 1.3s linear infinite;
+}
+@keyframes shimmerMove{
+  0%{ background-position:0% 0; }
+  100%{ background-position:200% 0; }
+}
+
+/* ============================================================
+   Hero — floating decorative blobs + gradient headline
+   ============================================================ */
+.hero-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(50px);
+  opacity:.32;
+  pointer-events:none;
+  z-index:0;
+  animation: floatBlob 9s ease-in-out infinite;
+}
+.hero-blob-1{
+  width:280px; height:280px;
+  top:8%; right:12%;
+  background:radial-gradient(circle,var(--forest-600),transparent 70%);
+}
+.hero-blob-2{
+  width:220px; height:220px;
+  bottom:10%; right:28%;
+  background:radial-gradient(circle,var(--terracotta-600),transparent 70%);
+  animation-delay:2.5s;
+}
+@keyframes floatBlob{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(-14px,18px) scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-blob{ animation:none; }
+}
+
+.hero-gradient-text{
+  background: linear-gradient(90deg, var(--forest-700), var(--forest-600) 55%, var(--terracotta-600));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* ============================================================
+   Footer links — underline wipe
+   ============================================================ */
+footer nav a{
+  position:relative;
+  transition:color .2s ease;
+}
+footer nav a::after{
+  content:"";
+  position:absolute; left:0; bottom:-3px;
+  width:0; height:1px;
+  background:var(--forest-700);
+  transition:width .25s ease;
+}
+footer nav a:hover{ color:var(--forest-700) !important; }
+footer nav a:hover::after{ width:100%; }
+
+/* ============================================================
+   Camera page — gentle hover zoom on the live frame
+   ============================================================ */
+.camera-frame{ transition: transform .4s ease, box-shadow .4s ease; }
+.camera-frame:hover{ transform:scale(1.012); box-shadow:0 22px 50px rgba(44,107,73,.28); }
+
+/* ============================================================
+   Service tiles on index.html — lift on hover
+   ============================================================ */
+.service-tile{ transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+.service-tile:hover{ transform: translateY(-6px); }
+
+/* back-link arrow nudge on hover */
+.camera-back-link{ transition: filter .2s ease, transform .2s ease; }
+.camera-back-link:hover{ transform: translateX(-2px); }
+.camera-back-link i, .camera-back-link svg{ transition: transform .25s ease; }
+.camera-back-link:hover i, .camera-back-link:hover svg{ transform: translateX(-3px); }
+
+/* ============================================================
+   ABOUT PAGE — vertical story strips, zig-zag 50/50 layout
+   Sequence: hook -> origin -> approach -> team -> CTA.
+   Each strip alternates media/text sides so the page keeps an
+   easy scroll rhythm; the hook and CTA are the two places the
+   design is allowed to go full-bleed and bold.
+   ============================================================ */
+
+.story-hook{
+  position:relative;
+  background: var(--terracotta-700);
+  color:#F7F5EF;
+  padding:96px 8vw 88px;
+  overflow:hidden;
+}
+.story-hook::before{
+  content:"";
+  position:absolute;
+  inset:-20% -10% auto auto;
+  width:520px; height:520px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(126,156,130,.35), transparent 68%);
+  pointer-events:none;
+}
+.story-hook .story-eyebrow{ color:var(--forest-100); }
+.story-hook .story-eyebrow::before{ background:var(--forest-100); }
+.story-hook h1{
+  color:#FBFAF6;
+  font-size:clamp(2.4rem, 5vw, 4.2rem);
+  line-height:1.05;
+  max-width:16ch;
+  margin:.5rem 0 0;
+}
+.story-hook p{
+  color:#D8D8CC;
+  max-width:56ch;
+  font-size:1.08rem;
+  margin-top:22px;
+}
+
+.story-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--forest-700);
+}
+.story-eyebrow::before{
+  content:"";
+  width:20px; height:1.5px;
+  background:var(--forest-700);
+}
+
+.story-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  align-items:center;
+  padding:80px 8vw;
+  border-bottom:1px solid var(--border);
+}
+.story-strip:nth-of-type(even){ background:var(--cream-100); }
+.story-strip.reverse > .story-media{ order:2; }
+.story-strip.reverse > .story-text{ order:1; }
+
+.story-text h2{
+  font-size:clamp(1.6rem,2.6vw,2.3rem);
+  margin:.5rem 0 0;
+  line-height:1.15;
+}
+.story-text p{
+  margin-top:16px;
+  max-width:52ch;
+  color:var(--body-text);
+  font-size:1rem;
+  line-height:1.7;
+}
+.story-stat-row{
+  display:flex;
+  gap:32px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+.story-stat b{
+  display:block;
+  font-family:var(--font-display);
+  font-size:1.6rem;
+  color:var(--ink);
+}
+.story-stat span{
+  font-size:.75rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.story-media{
+  position:relative;
+  aspect-ratio:4/3.1;
+  border-radius:var(--radius-lg);
+  background:var(--forest-50);
+  border:1px solid var(--forest-100);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.story-media svg{ width:78%; height:78%; }
+
+/* Team — a full-width strip that breaks the zig-zag rhythm on
+   purpose (a crowd of people isn't a 50/50 story beat) */
+.team-strip{
+  padding:84px 8vw;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+.team-strip .story-text{ max-width:60ch; margin-bottom:44px; }
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:22px;
+}
+.team-card{
+  background:var(--cream-050);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:22px;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.team-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-md);
+  border-color:var(--forest-100);
+}
+.team-avatar{
+  width:52px; height:52px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--forest-600),var(--forest-900));
+  color:#fff;
+  display:grid; place-items:center;
+  font-family:var(--font-display);
+  font-weight:700;
+  margin-bottom:14px;
+}
+.team-card h4{ margin:0; font-size:1rem; }
+.team-card .role{ font-size:.78rem; color:var(--forest-700); font-weight:600; margin-top:2px; }
+.team-card p{ font-size:.86rem; color:var(--muted); margin-top:10px; line-height:1.55; }
+
+/* CTA — closing strip, mirrors the hook so the page feels bookended */
+.story-cta{
+  padding:88px 8vw;
+  background:var(--ink);
+  color:#F7F5EF;
+  text-align:center;
+}
+.story-cta .story-eyebrow{ justify-content:center; color:var(--forest-100); }
+.story-cta .story-eyebrow::before{ background:var(--forest-100); }
+.story-cta h2{ color:#FBFAF6; font-size:clamp(1.8rem,3vw,2.6rem); margin:.6rem auto 0; max-width:22ch; }
+.story-cta p{ color:#CFCFC3; max-width:52ch; margin:16px auto 30px; }
+.story-cta .btn-primary, .story-cta .btn-accent{
+  display:inline-block;
+  width:auto;
+  padding:14px 30px;
+}
+.story-cta .btn-primary{ background:var(--forest-600); box-shadow:0 8px 22px rgba(126,156,130,.3); }
+
+@media (max-width:860px){
+  .story-strip{ grid-template-columns:1fr; padding:56px 6vw; gap:32px; }
+  .story-strip.reverse > .story-media{ order:1; }
+  .story-strip.reverse > .story-text{ order:2; }
+  .story-hook{ padding:64px 6vw; }
+  .team-strip, .story-cta{ padding:56px 6vw; }
+}
+
+/* ============================================================
+   USER GUIDE PAGE — F-pattern / inverted pyramid
+   Sticky top search bar, left TOC, right single-column content,
+   content itself broken into short modular step cards.
+   ============================================================ */
+
+.guide-topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:16px 8vw;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.guide-topbar .page-title{ font-size:1.3rem; margin:0; white-space:nowrap; }
+.guide-search{
+  flex:1;
+  min-width:220px;
+  max-width:480px;
+  position:relative;
+  margin-left:auto;
+}
+.guide-search input{
+  width:100%;
+  padding:11px 16px 11px 42px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  font-family:var(--font-body);
+  font-size:.92rem;
+  color:var(--ink);
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.guide-search input:focus{
+  outline:none;
+  border-color:var(--forest-600);
+  box-shadow:0 0 0 3px var(--forest-50);
+}
+.guide-search i, .guide-search svg{
+  position:absolute;
+  left:16px; top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:.85rem;
+  width:15px; height:15px;
+}
+.guide-search-count{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-left:6px;
+  white-space:nowrap;
+}
+
+.guide-shell{
+  display:grid;
+  grid-template-columns:220px minmax(0,720px);
+  gap:56px;
+  padding:40px 8vw 100px;
+  align-items:start;
+  justify-content:center;
+}
+
+.guide-toc{
+  position:sticky;
+  top:88px;
+  align-self:start;
+}
+.guide-toc .toc-group{ margin-bottom:22px; }
+.guide-toc .toc-label{
+  font-size:.68rem;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.guide-toc ul{ list-style:none; margin:0; padding:0; border-left:2px solid var(--border); }
+.guide-toc a{
+  display:block;
+  padding:6px 0 6px 14px;
+  margin-left:-2px;
+  border-left:2px solid transparent;
+  font-size:.86rem;
+  color:var(--body-text);
+  text-decoration:none;
+  transition:color .18s ease, border-color .18s ease;
+}
+.guide-toc a:hover{ color:var(--forest-700); }
+.guide-toc a.active{
+  color:var(--ink);
+  font-weight:600;
+  border-left:2px solid var(--terracotta-700);
+}
+
+.guide-content{ min-width:0; }
+
+/* inverted pyramid: the answer up top, before any step detail */
+.guide-summary{
+  background:var(--forest-50);
+  border:1px solid var(--forest-100);
+  border-radius:var(--radius-lg);
+  padding:26px 28px;
+  margin-bottom:44px;
+}
+.guide-summary .story-eyebrow{ margin-bottom:8px; }
+.guide-summary h1{ font-size:1.7rem; margin:0 0 10px; }
+.guide-summary p{ color:var(--body-text); line-height:1.65; max-width:64ch; }
+.guide-summary ul{ margin:14px 0 0; padding-left:1.1rem; color:var(--body-text); }
+.guide-summary li{ margin-bottom:4px; }
+
+.guide-section{ margin-bottom:52px; scroll-margin-top:90px; }
+.guide-section > h2{
+  font-size:1.35rem;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:22px;
+}
+
+.guide-step{
+  display:grid;
+  grid-template-columns:40px 1fr;
+  gap:16px;
+  padding:18px 0;
+  border-bottom:1px dashed var(--border);
+}
+.guide-step:last-child{ border-bottom:none; }
+.guide-step-num{
+  width:36px; height:36px;
+  border-radius:50%;
+  background:var(--forest-700);
+  color:#fff;
+  display:grid; place-items:center;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:.92rem;
+}
+.guide-step-num svg{ width:16px; height:16px; }
+.guide-step h3{ margin:0 0 6px; font-size:1.02rem; }
+.guide-step p{ margin:0; color:var(--body-text); font-size:.94rem; line-height:1.65; }
+.guide-step.dimmed{ opacity:.28; }
+
+.guide-callout{
+  display:flex;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:12px;
+  font-size:.88rem;
+  line-height:1.55;
+  margin:18px 0;
+}
+.guide-callout i, .guide-callout svg{ margin-top:2px; flex-shrink:0; }
+.guide-callout.tip{ background:var(--forest-50); color:var(--forest-900); border:1px solid var(--forest-100); }
+.guide-callout.warn{ background:#FBF1E6; color:#6B4A1E; border:1px solid #EEDCBB; }
+
+@media (max-width:960px){
+  .guide-shell{ grid-template-columns:1fr; }
+  .guide-toc{ position:static; border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:10px; }
+  .guide-toc ul{ display:flex; flex-wrap:wrap; gap:4px 18px; border-left:none; }
+  .guide-toc a{ padding:4px 0; border-left:none; }
+  .guide-toc a.active{ border-left:none; text-decoration:underline; text-decoration-color:var(--terracotta-700); }
+}

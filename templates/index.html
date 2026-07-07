@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCP Vision AI — Deep Learning Eye Disease Detection System</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Unified stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="font-sans">
+
+<div class="min-h-screen flex flex-row">
+
+  <!-- ===========================
+       SIDEBAR
+       =========================== -->
+  <nav class="app-sidebar w-20 md:w-24 fixed h-full left-0 top-0 flex flex-col items-center py-8 z-50">
+
+    <div class="mb-12 brand-mark scan-ring">
+      <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+    </div>
+
+    <div class="flex flex-col gap-8 flex-1 w-full">
+
+      <a href="/" class="active relative w-full flex flex-col items-center justify-center gap-2 p-2 group">
+        <i data-lucide="eye" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Overview</span>
+      </a>
+
+      <a href="/user_guide" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="activity" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">User Guide</span>
+      </a>
+
+      <a href="/developers" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="user" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Developers</span>
+      </a>
+
+      <a href="/data_security" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="shield" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">Data Security</span>
+      </a>
+
+      <a href="/about_page" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="calendar" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">About</span>
+      </a>
+
+      <a href="/ai" class="relative w-full flex flex-col items-center gap-2 p-2 group">
+        <i data-lucide="bot" class="w-6 h-6"></i>
+        <span class="sidebar-tooltip">AI Page</span>
+      </a>
+
+    </div>
+  </nav>
+
+
+  <!-- ===========================
+       MAIN CONTENT
+       =========================== -->
+  <main class="flex-1 ml-20 md:ml-24 page-fade-in">
+
+    <!-- HEADER -->
+    <header class="app-header h-20 flex items-center justify-between px-8 md:px-12 sticky top-0 z-40">
+      <div>
+        <div class="brand-title">CCP Vision AI</div>
+        <div class="brand-subtitle">Deep Learning Eye Disease Detection System</div>
+      </div>
+      <div class="flex items-center gap-8">
+        <div class="text-right hidden md:block">
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Emergency Line</p>
+          <p class="text-lg font-semibold" style="color:var(--teal-700)">1-800-Nurse Office</p>
+        </div>
+        <div class="brand-avatar">O</div>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative w-full h-[85vh] bg-white overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <img src="{{ url_for('static', filename='assets/hero.png') }}"
+             class="w-full h-full object-cover opacity-90"
+             alt="Eye Care Technology">
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+      </div>
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+
+      <div class="relative z-10 h-full container mx-auto px-8 md:px-12 flex flex-col justify-center max-w-7xl">
+        <div class="max-w-xl">
+          <span class="hero-eyebrow">
+            Deep Learning Diagnostics
+          </span>
+
+          <h2 class="text-5xl md:text-7xl mb-6 leading-[1.1] font-medium tracking-tight" style="color:var(--ink)">
+            Precision <br>
+            <span class="hero-gradient-text">Vision Care</span>
+          </h2>
+
+          <p class="text-lg mb-10 leading-relaxed max-w-md" style="color:var(--muted)">
+            A deep learning system that images and screens for early signs of eye disease — combining clinical precision with real-time AI analysis.
+          </p>
+
+          <div class="flex items-center gap-4">
+            <a href="/ai" class="btn-pulse text-white px-8 py-4 text-sm font-medium tracking-wide transition-colors flex items-center gap-2 no-underline rounded-lg" style="background:var(--ink)">
+              SCAN USING AI <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+
+            <a href="#services" class="px-8 py-4 text-sm font-medium tracking-wide transition-colors border border-transparent no-underline" style="color:var(--ink)">
+              VIEW SERVICES
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-24 px-8 md:px-12 bg-white border-t border-slate-100">
+      <div class="container mx-auto max-w-7xl">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+          <div class="service-tile group cursor-pointer">
+            <div class="icon-spot mb-6 group-hover:text-white transition-colors duration-300" onmouseover="this.style.background='var(--teal-700)'" onmouseout="this.style.background='var(--teal-50)'">
+              <i data-lucide="activity" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3" style="color:var(--ink)">Diagnostics</h3>
+            <p class="leading-relaxed text-sm" style="color:var(--muted)">
+              High-resolution retinal imaging with AI scans for early detection of ocular pathologies.
+            </p>
+          </div>
+
+          <div class="service-tile group cursor-pointer">
+            <div class="icon-spot mb-6 group-hover:text-white transition-colors duration-300" onmouseover="this.style.background='var(--teal-700)'" onmouseout="this.style.background='var(--teal-50)'">
+              <i data-lucide="eye" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3" style="color:var(--ink)">Result Receipt</h3>
+            <p class="leading-relaxed text-sm" style="color:var(--muted)">
+              Provides downloadable receipt of the AI image detection result.
+            </p>
+          </div>
+
+          <div class="service-tile group cursor-pointer">
+            <div class="icon-spot mb-6 group-hover:text-white transition-colors duration-300" onmouseover="this.style.background='var(--teal-700)'" onmouseout="this.style.background='var(--teal-50)'">
+              <i data-lucide="shield" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3" style="color:var(--ink)">Data Security</h3>
+            <p class="leading-relaxed text-sm" style="color:var(--muted)">
+              Secured data privacy and safe usage.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-12 px-8 md:px-12 border-t border-slate-200" style="background:var(--bg)">
+      <div class="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-6">
+        <p class="text-sm" style="color:var(--muted)">© 2025 CCP Vision AI. All rights reserved.</p>
+        <nav class="flex gap-6">
+          <a href="#" class="text-sm transition-colors" style="color:var(--muted)">Privacy Policy</a>
+          <a href="#" class="text-sm transition-colors" style="color:var(--muted)">Terms of Service</a>
+          <a href="#" class="text-sm transition-colors" style="color:var(--muted)">Contact Support</a>
+        </nav>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+<!-- PRIVACY MODAL -->
+<div id="privacyModal" class="privacy-scrim fixed inset-0 flex items-center justify-center z-[9999]">
+  <div class="bg-white rounded-xl p-8 max-w-md w-full shadow-xl">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--ink)">Data Privacy Agreement</h2>
+      <p class="text-sm mb-6" style="color:var(--body-text)">
+        Before entering this website, please read and agree to our Data Privacy Policy regarding the usage and processing of submitted images.
+      </p>
+
+      <label class="flex items-center gap-3 mb-6 cursor-pointer">
+        <input type="checkbox" id="agreeCheck" class="w-5 h-5 cursor-pointer" style="accent-color:var(--teal-700)">
+        <span class="text-sm" style="color:var(--body-text)">I agree to the <a href="/privacy" class="underline" style="color:var(--teal-700)">Data Privacy Policy</a></span>
+      </label>
+
+      <button id="agreeButton"
+              class="w-full py-3 text-white rounded-lg cursor-not-allowed transition-all"
+              style="background:#94a3b8"
+              disabled>
+        Agree & Continue
+      </button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("privacyModal");
+  const checkbox = document.getElementById("agreeCheck");
+  const button = document.getElementById("agreeButton");
+
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+      button.disabled = false;
+      button.classList.remove("cursor-not-allowed");
+      button.classList.add("btn-accept");
+      button.style.background = "";
+    } else {
+      button.disabled = true;
+      button.classList.add("cursor-not-allowed");
+      button.classList.remove("btn-accept");
+      button.style.background = "#94a3b8";
+    }
+  });
+
+  button.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("load", () => {
+    modal.style.display = "flex";
+  });
+</script>
+
+</body>
+</html>

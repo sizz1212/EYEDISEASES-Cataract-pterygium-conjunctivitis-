@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide — CCP Vision AI</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Unified stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="min-h-screen flex flex-row">
+
+    <!-- SIDEBAR -->
+    <nav class="app-sidebar w-20 md:w-24 fixed h-full flex flex-col items-center py-8">
+
+        <div class="mb-12 brand-mark scan-ring">
+            <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+        </div>
+
+        <div class="flex flex-col gap-8 flex-1 w-full">
+
+            <a href="/" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="eye" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Overview</span>
+            </a>
+
+            <a href="/user_guide" class="active relative w-full flex flex-col items-center p-2 group font-semibold">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">User Guide</span>
+            </a>
+
+            <a href="/developers" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="user" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Developers</span>
+            </a>
+
+            <a href="/data_security" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">Data Security</span>
+            </a>
+
+            <a href="/about_page" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="calendar" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">About</span>
+            </a>
+
+            <a href="/ai" class="relative w-full flex flex-col items-center p-2 group">
+                <i data-lucide="bot" class="w-6 h-6"></i>
+                <span class="sidebar-tooltip">AI Page</span>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 ml-20 md:ml-24 page-fade-in">
+
+        <!-- HEADER -->
+        <header class="app-header h-20 flex items-center justify-between px-8 md:px-12 sticky top-0 z-30">
+            <div>
+                <div class="brand-title">CCP Vision AI</div>
+                <div class="brand-subtitle">Deep Learning Eye Disease Detection System</div>
+            </div>
+            <div class="page-crumb hidden md:block">User Guide</div>
+        </header>
+
+        <!-- ============ TOP SEARCH BAR (F-pattern top stroke) ============ -->
+        <div class="guide-topbar" style="top:80px;">
+            <h1 class="page-title" style="font-size:1.3rem;">User Guide</h1>
+            <div class="guide-search">
+                <i data-lucide="search" style="width:16px;height:16px;"></i>
+                <input type="text" id="guideSearch" placeholder="Search the guide, e.g. &quot;upload image&quot;">
+            </div>
+            <span class="guide-search-count" id="guideCount"></span>
+        </div>
+
+        <div class="guide-shell">
+
+            <!-- ============ LEFT TOC ============ -->
+            <aside class="guide-toc">
+                <div class="toc-group">
+                    <div class="toc-label">Getting started</div>
+                    <ul>
+                        <li><a href="#getting-started" class="active">Getting started</a></li>
+                        <li><a href="#navigation">Navigation</a></li>
+                    </ul>
+                </div>
+                <div class="toc-group">
+                    <div class="toc-label">Using the AI page</div>
+                    <ul>
+                        <li><a href="#ai-usage">Uploading &amp; analyzing</a></li>
+                    </ul>
+                </div>
+                <div class="toc-group">
+                    <div class="toc-label">More</div>
+                    <ul>
+                        <li><a href="#data-security">Data security</a></li>
+                        <li><a href="#help">Need help?</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- ============ RIGHT CONTENT — inverted pyramid ============ -->
+            <div class="guide-content">
+
+                <!-- the answer, before any step-by-step detail -->
+                <div class="guide-summary">
+                    <span class="story-eyebrow">Quick start</span>
+                    <h1>Upload an eye image on the AI Page and get an analysis back.</h1>
+                    <p>CCP Vision AI assists in detecting eye conditions using advanced deep-learning analysis. Use the sidebar to move between pages, and head to the AI Page whenever you're ready to run a scan.</p>
+                    <ul>
+                        <li>The sidebar is always available on the left to jump between pages</li>
+                        <li>The AI Page is where images are uploaded and analyzed</li>
+                        <li>About and Developers have more background on the project</li>
+                    </ul>
+                </div>
+
+                <section class="guide-section" id="getting-started">
+                    <h2>Getting started</h2>
+                    <div class="guide-step">
+                        <div class="guide-step-num"><i data-lucide="sparkles" style="width:16px;height:16px;"></i></div>
+                        <div>
+                            <h3>What CCP Vision AI does</h3>
+                            <p>It assists in detecting eye conditions using advanced deep-learning analysis, giving you a fast, early read before you see a specialist.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="guide-section" id="navigation">
+                    <h2>Navigation</h2>
+                    <div class="guide-step">
+                        <div class="guide-step-num">1</div>
+                        <div>
+                            <h3>Use the sidebar to move between pages</h3>
+                            <p>The icons on the left stay visible everywhere — hover any icon for its label.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-step-num">2</div>
+                        <div>
+                            <h3>Access the AI Page to upload and analyze eye images</h3>
+                            <p>Select the bot icon in the sidebar to open the AI Page.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-step-num">3</div>
+                        <div>
+                            <h3>Open other pages for details, help, or information</h3>
+                            <p>About, Developers, and Data Security round out the rest of the app.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="guide-section" id="ai-usage">
+                    <h2>AI Page usage</h2>
+                    <div class="guide-step">
+                        <div class="guide-step-num">1</div>
+                        <div>
+                            <h3>Upload a clear eye image</h3>
+                            <p>Good lighting and a sharp, close-up photo of the eye give the most reliable read.</p>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="guide-step-num">2</div>
+                        <div>
+                            <h3>Let the system analyze it</h3>
+                            <p>The system will analyze the image and display the predicted condition in a few seconds.</p>
+                        </div>
+                    </div>
+
+                    <div class="guide-callout warn">
+                        <i data-lucide="triangle-alert" style="width:16px;height:16px;"></i>
+                        <span>This is a screening tool, not a diagnosis. Always confirm results with an eye care professional.</span>
+                    </div>
+                </section>
+
+                <section class="guide-section" id="data-security">
+                    <h2>Data security</h2>
+                    <div class="guide-step">
+                        <div class="guide-step-num"><i data-lucide="shield" style="width:16px;height:16px;"></i></div>
+                        <div>
+                            <h3>How your images are handled</h3>
+                            <p>Visit the Data Security page for the full breakdown of how uploads are stored and protected.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="guide-section" id="help">
+                    <h2>Need help?</h2>
+                    <div class="guide-step">
+                        <div class="guide-step-num"><i data-lucide="help-circle" style="width:16px;height:16px;"></i></div>
+                        <div>
+                            <h3>Still stuck?</h3>
+                            <p>Visit the About or Developers page for more information about the project, or reach out to the team from there.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    lucide.createIcons();
+
+    // Search filters guide-step cards and dims non-matching ones.
+    const searchInput = document.getElementById('guideSearch');
+    const countEl = document.getElementById('guideCount');
+    const steps = Array.from(document.querySelectorAll('.guide-step'));
+
+    searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+        let matches = 0;
+        steps.forEach(step => {
+            const text = step.textContent.toLowerCase();
+            const isMatch = !q || text.includes(q);
+            step.classList.toggle('dimmed', !isMatch && q.length > 0);
+            if (isMatch) matches++;
+        });
+        countEl.textContent = q ? `${matches} of ${steps.length} steps match` : '';
+    });
+
+    // Scrollspy: highlight the TOC entry for the section in view.
+    const sections = document.querySelectorAll('.guide-section');
+    const tocLinks = document.querySelectorAll('.guide-toc a');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                tocLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>

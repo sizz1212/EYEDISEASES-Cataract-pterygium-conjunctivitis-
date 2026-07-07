@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Notice — CCP Vision AI</title>
+
+    <!-- Unified stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="privacy-page-bg">
+
+<div class="privacy-card">
+
+    <div class="text-center mb-2" style="color:var(--teal-700); font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;">
+        CCP Vision AI &middot; Deep Learning Eye Disease Detection System
+    </div>
+
+    <h1 class="text-center mb-5" style="font-size:1.75rem; font-weight:700;">Privacy Notice</h1>
+
+    <div class="privacy-highlight">
+        <p style="margin:0;">
+            This system analyzes eye images using your device's camera or uploaded photos.
+            <b>No data is saved, stored, transmitted, or shared.</b>
+            All processing happens in real time and locally during your active session.
+        </p>
+    </div>
+
+    <p>
+        This Eye Disease Detection System is developed for academic and screening purposes only.
+        It does not replace professional medical diagnosis.
+    </p>
+
+    <p>
+        By continuing, you acknowledge your understanding of:
+        <br><br>
+        • How your camera or images are used
+        • Your right to withdraw consent anytime
+        • Your responsibility to seek proper medical evaluation
+    </p>
+
+    <p>
+        If you accept, you may proceed to the system and begin detection.
+    </p>
+
+    <button class="btn btn-accept" onclick="acceptPrivacy()">
+        I Understand & Accept
+    </button>
+
+    <button class="btn btn-decline" onclick="declinePrivacy()">
+        Decline & Exit
+    </button>
+
+    <div class="footer-note">
+        © 2025 CCP Vision AI &middot; Deep Learning Eye Disease Detection System &middot; Thesis Project
+    </div>
+
+</div>
+
+<script>
+    function acceptPrivacy() {
+        localStorage.setItem("privacyAccepted", "yes");
+        window.location.href = "/";
+    }
+
+    function declinePrivacy() {
+        alert("You declined the Privacy Notice. The application will now close.");
+        window.close();
+    }
+</script>
+
+</body>
+</html>
